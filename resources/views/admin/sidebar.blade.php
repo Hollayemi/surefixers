@@ -253,6 +253,14 @@
                 <li class="{{ Route::is('admin.email-template') || Route::is('admin.edit-email-template') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.email-template') }}">{{__('admin.Email Template')}}</a></li>
             </ul>
           </li>
+
+          <li class="{{ Route::is('admin.onboarding.index') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('admin.onboarding.index') }}">
+                  <i class="fas fa-envelope"></i> 
+                  <span>{{__('admin.Onboarding Messages')}}</span>
+              </a>
+          </li>
+
           <li class="nav-item dropdown {{ Route::is('admin.admin-language') || Route::is('admin.admin-validation-language') || Route::is('admin.website-language') || Route::is('admin.website-validation-language') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Language')}}</span></a>
 

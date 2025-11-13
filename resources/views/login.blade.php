@@ -49,8 +49,8 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <fieldset>
-                                                    <legend>{{__('user.Email')}}*</legend>
-                                                    <input type="email" name="email">
+                                                    <legend>{{__('user.EmailOrPhone')}}*</legend>
+                                                    <input type="text" name="login">
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-12">

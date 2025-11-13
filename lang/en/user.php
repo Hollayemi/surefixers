@@ -30,6 +30,7 @@
   'Declined' => 'Declined',
   'Pending' => 'Pending',
   'View Details' => 'View Details',
+  'EmailOrPhone' => 'Email Or Phone'
   'review' => 'review',
   'Open New Ticket' => 'Open New Ticket',
   'SN' => 'SN',

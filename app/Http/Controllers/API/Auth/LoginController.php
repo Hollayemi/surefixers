@@ -57,21 +57,26 @@ class LoginController extends Controller
 
     public function storeLogin(Request $request){
         $rules = [
-            'email'=>'required',
+            'login'=>'required', // Changed from 'email'
             'password'=>'required',
             'g-recaptcha-response'=>new Captcha()
         ];
         $customMessages = [
-            'email.required' => trans('user_validation.Email is required'),
+            'login.required' => trans('user_validation.Email or Phone is required'),
             'password.required' => trans('user_validation.Password is required'),
         ];
         $this->validate($request, $rules,$customMessages);
-
-        $credential=[
-            'email'=> $request->email,
-            'password'=> $request->password
+    
+        // Determine if login input is email or phone
+        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+        
+        $credential = [
+            $loginType => $request->login,
+            'password' => $request->password
         ];
-        $user = User::where('email',$request->email)->first();
+        
+        $user = User::where($loginType, $request->login)->first();
+        
         if($user){
             if($user->status==1){
                 if($user->is_provider == 1) {
@@ -81,24 +86,23 @@ class LoginController extends Controller
                     }
                 }
                 if(Hash::check($request->password,$user->password)){
-
                     if (! $token = Auth::guard('api')->attempt($credential)) {
                         return response()->json(['error' => 'Unauthorized'], 401);
                     }
-                    $user = User::where('email',$request->email)->select('id','name','email','phone','image','status')->first();
+                    $user = User::where($loginType, $request->login)
+                        ->select('id','name','email','phone','image','status')
+                        ->first();
                     return $this->respondWithToken($token,$user);
-
                 }else{
                     $notification = trans('user_validation.Credentials does not exist');
                     return response()->json(['message' => $notification], 403);
                 }
-
             }else{
                 $notification = trans('user_validation.Disabled Account');
                 return response()->json(['message' => $notification], 403);
             }
         }else{
-            $notification = trans('user_validation.Email does not exist');
+            $notification = trans('user_validation.Email or Phone does not exist');
             return response()->json(['message' => $notification], 403);
         }
     }

@@ -47,6 +47,8 @@ use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\BreadcrumbController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 
+use App\Http\Controllers\Admin\OnboardingMessageController;
+
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -548,7 +550,12 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('coupon-history', [AdminCouponController::class, 'coupon_history'])->name('coupon-history');
 
 
-
+    // Onboarding Messages Routes
+    Route::get('onboarding-messages', [OnboardingMessageController::class, 'index'])->name('onboarding.index');
+    Route::post('onboarding-send-to-all', [OnboardingMessageController::class, 'sendToAll'])->name('onboarding.send-to-all')->withoutMiddleware([\App\Http\Middleware\XSSProtection::class]);;
+    Route::post('onboarding-send-to-selected', [OnboardingMessageController::class, 'sendToSelected'])->name('onboarding.send-to-selected');
+    Route::get('onboarding-test-connection', [OnboardingMessageController::class, 'testConnection'])->name('onboarding.test-connection');
+    Route::get('onboarding-get-user-by-phone', [OnboardingMessageController::class, 'getUsersByPhone'])->name('onboarding.get-user-by-phone');
 
 
 

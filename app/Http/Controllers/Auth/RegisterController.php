@@ -70,34 +70,37 @@ class RegisterController extends Controller
         $rules = [
             'name'=>'required',
             'email'=>'required|unique:users',
+            'phone'=>'required|unique:users', // Add this
             'password'=>'required|min:4',
             'g-recaptcha-response'=>new Captcha()
         ];
         $customMessages = [
-            'name.required' => trans('user_validation.Email is required'),
+            'name.required' => trans('user_validation.Name is required'),
             'email.required' => trans('user_validation.Email is required'),
             'email.unique' => trans('user_validation.Email already exist'),
+            'phone.required' => trans('user_validation.Phone is required'),
+            'phone.unique' => trans('user_validation.Phone already exist'),
             'password.required' => trans('user_validation.Password is required'),
             'password.min' => trans('user_validation.Password must be 4 characters'),
-            'password.confirmed' => trans('user_validation.Confirm password does not match'),
         ];
         $this->validate($request, $rules,$customMessages);
-
+    
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone; // Make sure this is saved
         $user->password = Hash::make($request->password);
         $user->verify_token = Str::random(100);
         $user->save();
-
+    
         MailHelper::setMailConfig();
-
+    
         $template=EmailTemplate::where('id',4)->first();
         $subject=$template->subject;
         $message=$template->description;
         $message = str_replace('{{user_name}}',$request->name,$message);
         Mail::to($user->email)->send(new UserRegistration($message,$subject,$user));
-
+    
         $notification = trans('user_validation.Register Successfully. Please Verify your email');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
         return redirect()->back()->with($notification);

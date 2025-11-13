@@ -66,23 +66,30 @@ class LoginController extends Controller
         ]);
     }
 
+
+
     public function storeLogin(Request $request){
         $rules = [
-            'email'=>'required',
+            'login'=>'required', // Changed from 'email' to 'login'
             'password'=>'required',
             'g-recaptcha-response'=>new Captcha()
         ];
         $customMessages = [
-            'email.required' => trans('user_validation.Email is required'),
+            'login.required' => trans('user_validation.Email or Phone is required'),
             'password.required' => trans('user_validation.Password is required'),
         ];
         $this->validate($request, $rules,$customMessages);
-
-        $credential=[
-            'email'=> $request->email,
-            'password'=> $request->password
+    
+        // Determine if login input is email or phone
+        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+        
+        $credential = [
+            $loginType => $request->login,
+            'password' => $request->password
         ];
-        $user = User::where('email',$request->email)->first();
+        
+        $user = User::where($loginType, $request->login)->first();
+        
         if($user){
             if($user->status==1){
                 if(Hash::check($request->password,$user->password)){
@@ -94,21 +101,19 @@ class LoginController extends Controller
                         }else {
                             return redirect()->intended(route('dashboard'))->with($notification);
                         }
-
                     }
                 }else{
                     $notification = trans('user_validation.Credentials does not exist');
                     $notification=array('messege'=>$notification,'alert-type'=>'error');
                     return redirect()->back()->with($notification);
                 }
-
             }else{
                 $notification = trans('user_validation.Disabled Account');
                 $notification=array('messege'=>$notification,'alert-type'=>'error');
                 return redirect()->back()->with($notification);
             }
         }else{
-            $notification = trans('user_validation.Email does not exist');
+            $notification = trans('user_validation.Email or Phone does not exist');
             $notification=array('messege'=>$notification,'alert-type'=>'error');
             return redirect()->back()->with($notification);
         }

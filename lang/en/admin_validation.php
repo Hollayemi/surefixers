@@ -177,5 +177,9 @@
   'Offer percentage is required' => 'Offer percentage is required',
   'Expired date is required' => 'Expired date is required',
   'Coupon already exist' => 'Coupon already exist',
+  'Message template is required' => 'Message template is required',
+  'At least one phone number is required' => 'At least one phone number is required',
+  'No users found for onboarding' => 'No users found for onboarding',
+  'No valid phone numbers provided' => 'No valid phone numbers provided',
 );
  ?>
