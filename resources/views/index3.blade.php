@@ -221,12 +221,14 @@
 
             </div>
         </div>
+        <br>
+    <br>
     </section>
     <!--=========================
         FEATURED SERVICES END
     ==========================-->
     @endif
-
+   
 @if ($coundown_visibility)
     <!--=========================
         COUNTER START
@@ -431,6 +433,9 @@
     <!--=========================
         SELLAR JOIN START
     ==========================-->
+    <br>
+    <br>
+    <br>
     <section class="wsus__seller_join mt_100 xs_mt_70">
         <div class="container">
             <div class="wsus__sellar_bg  pt_75 xs_pt_45 pb_80 xs_pb_50"

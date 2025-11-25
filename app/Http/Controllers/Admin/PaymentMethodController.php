@@ -79,7 +79,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $paypal->image=$image_name;
+            $paypal->image = 'main_files/public/'.$image_name;
             $paypal->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -128,7 +128,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $stripe->image=$image_name;
+            $stripe->image = 'main_files/public/'.$image_name;
             $stripe->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -184,7 +184,7 @@ class PaymentMethodController extends Controller
             $image_name='uploads/website-images/'.$image_name;
             Image::make($image)
                 ->save(public_path().'/'.$image_name);
-            $razorpay->image=$image_name;
+            $razorpay->image = 'main_files/public/'.$image_name;
             $razorpay->save();
             if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
         }
@@ -217,7 +217,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $bank->image = $image_name;
+            $bank->image = 'main_files/public/'.$image_name;
             $bank->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -264,7 +264,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $mollie->mollie_image = $image_name;
+            $mollie->mollie_image = 'main_files/public/'.$image_name;
             $mollie->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -313,7 +313,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $paystact->paystack_image = $image_name;
+            $paystact->paystack_image = 'main_files/public/'.$image_name;
             $paystact->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -407,7 +407,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $instamojo->image = $image_name;
+            $instamojo->image = 'main_files/public/'.$image_name;
             $instamojo->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -456,7 +456,7 @@ class PaymentMethodController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $paymongo->image = $image_name;
+            $paymongo->image = 'main_files/public/'.$image_name;
             $paymongo->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);

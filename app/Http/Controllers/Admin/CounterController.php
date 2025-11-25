@@ -156,7 +156,7 @@ class CounterController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->counter_bg_image = $image_name;
+            $setting->counter_bg_image = 'main_files/public/'.$image_name;
             $setting->save();
 
             if($old_image){

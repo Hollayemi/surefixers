@@ -57,7 +57,7 @@ class AdminProfileController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $admin->image=$image_name;
+            $admin->image = 'main_files/public/'.$image_name;
             $admin->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);

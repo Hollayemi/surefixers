@@ -3,7 +3,6 @@
 <title>{{__('admin.Onboarding Messages')}}</title>
 @endsection
 @section('admin-content')
-<!-- Main Content -->
 <div class="main-content">
     <section class="section">
         <div class="section-header">
@@ -26,7 +25,7 @@
                 </div>
             </div>
 
-            <!-- Statistics Cards -->
+            <!-- Statistics Card -->
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
@@ -45,96 +44,115 @@
                 </div>
             </div>
 
-            <!-- Send to All Users -->
+            <!-- Filters and Message Section -->
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Send to All Pending Users</h4>
+                            <h4>Send Onboarding Messages</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.onboarding.send-to-all') }}" method="POST" id="sendToAllForm">
+                            <form action="{{ route('admin.onboarding.send-to-selected') }}" method="POST" id="sendMessageForm">
                                 @csrf
+                                
+                                <!-- Filters Section -->
+                                <div class="row mb-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Filter by State</label>
+                                            <select name="filter_state" id="filterState" class="form-control">
+                                                <option value="">All States</option>
+                                                @foreach($states as $state)
+                                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Filter by User Type</label>
+                                            <select name="filter_user_type" id="filterUserType" class="form-control">
+                                                <option value="">All Users</option>
+                                                <option value="provider">Providers</option>
+                                                <option value="client">Clients</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Filter by Category</label>
+                                            <select name="filter_category" id="filterCategory" class="form-control">
+                                                <option value="">All Categories</option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Filter by Service</label>
+                                            <select name="filter_service" id="filterService" class="form-control">
+                                                <option value="">All Services</option>
+                                                @foreach($services as $service)
+                                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-primary" id="applyFiltersBtn">
+                                            <i class="fas fa-filter"></i> Apply Filters
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" id="resetFiltersBtn">
+                                            <i class="fas fa-undo"></i> Reset Filters
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Message Template -->
                                 <div class="form-group">
                                     <label>Message Template <span class="text-danger">*</span></label>
                                     <textarea 
                                         name="message_template" 
                                         class="form-control" 
-                                        rows="5" 
+                                        style="min-height: 120px;"
                                         placeholder="Use @{{name}}, @{{email}}, @{{phone}}, @{{password}} as placeholders"
-                                    >
-Hello @{{name}}, Welcome to our platform! 
+                                        required
+                                    >Hello @{{name}}, Welcome to our platform! 
 Your account has been created. 
 Login credentials - Email: @{{email}}, Password: @{{password}}. 
-Please change your password after first login.
-                                    </textarea>
-
+Please change your password after first login.</textarea>
                                     <small class="form-text text-muted">
                                         Available placeholders: @{{name}}, @{{email}}, @{{phone}}, @{{password}}
                                     </small>
                                 </div>
 
+                                <!-- Selection Info -->
+                                <div class="alert alert-info" id="selectionInfo" style="display: none;">
+                                    <strong><span id="selectedCount">0</span></strong> user(s) selected
+                                </div>
+
+                                <!-- Action Buttons -->
                                 <div class="form-group">
+                                    <button type="button" class="btn btn-success" id="selectAllBtn">
+                                        <i class="fas fa-check-square"></i> Select All
+                                    </button>
+                                    <button type="button" class="btn btn-warning" id="deselectAllBtn">
+                                        <i class="fas fa-square"></i> Deselect All
+                                    </button>
                                     <button 
                                         type="button" 
                                         class="btn btn-primary" 
                                         data-toggle="modal" 
-                                        data-target="#sendToAllModal"
+                                        data-target="#sendConfirmModal"
+                                        id="sendSelectedBtn"
+                                        disabled
                                     >
-                                        <i class="fas fa-paper-plane"></i> 
-                                        Send to All ({{ $pendingUsers->count() }} Users)
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Send to Selected Users -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Send to Selected Users</h4>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{ route('admin.onboarding.send-to-selected') }}" method="POST" id="sendToSelectedForm">
-                                @csrf
-                                <div class="form-group">
-                                    <label>Message Template <span class="text-danger">*</span></label>
-                                    <textarea 
-                                        name="message_template" 
-                                        class="form-control" 
-                                        rows="5" 
-                                        placeholder="Use @{{name}}, @{{email}}, @{{phone}}, @{{password}} as placeholders"
-                                    >
-Hello @{{name}}, Welcome to our platform! 
-Your account has been created. 
-Login credentials - Email: @{{email}}, Password: @{{password}}. 
-Please change your password after first login.
-                                    </textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone Numbers</label>
-                                    <div id="phoneNumbersContainer">
-                                        <div class="input-group mb-2 phone-number-row">
-                                            <input type="text" name="phone_numbers[]" class="form-control phone-input" placeholder="+1234567890">
-                                            <div class="input-group-append">
-                                                <button type="button" class="btn btn-danger remove-phone-btn" disabled>
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-success btn-sm mt-2" id="addPhoneBtn">
-                                        <i class="fas fa-plus"></i> Add More
-                                    </button>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendToSelectedModal">
                                         <i class="fas fa-paper-plane"></i> Send to Selected
                                     </button>
                                 </div>
@@ -144,44 +162,52 @@ Please change your password after first login.
                 </div>
             </div>
 
-            <!-- Pending Users List -->
+            <!-- Pending Users Table -->
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Pending Users List</h4>
+                            <h4>Pending Users List (<span id="tableCount">{{ $pendingUsers->count() }}</span>)</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="pendingUsersTable">
                                     <thead>
                                         <tr>
+                                            <th>
+                                                <input type="checkbox" id="selectAllCheckbox">
+                                            </th>
                                             <th>{{__('admin.SN')}}</th>
                                             <th>{{__('admin.Name')}}</th>
                                             <th>{{__('admin.Email')}}</th>
                                             <th>{{__('admin.Phone')}}</th>
+                                            <th>Type</th>
                                             <th>{{__('admin.Status')}}</th>
-                                            <th>{{__('admin.Action')}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($pendingUsers as $index => $user)
-                                        <tr>
+                                        <tr data-user-id="{{ $user->id }}">
+                                            <td>
+                                                <input type="checkbox" class="user-checkbox" value="{{ $user->id }}" name="user_ids[]" form="sendMessageForm">
+                                            </td>
                                             <td>{{ ++$index }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone ?? 'N/A' }}</td>
+                                            <td>
+                                                @if($user->is_provider)
+                                                    <span class="badge badge-primary">Provider</span>
+                                                @else
+                                                    <span class="badge badge-info">Client</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($user->onboarding_message_sent)
                                                     <span class="badge badge-success">Sent</span>
                                                 @else
                                                     <span class="badge badge-warning">Pending</span>
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm add-to-selected-btn" data-phone="{{ $user->phone }}">
-                                                    <i class="fas fa-plus"></i> Add to Selected
-                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -196,47 +222,23 @@ Please change your password after first login.
     </section>
 </div>
 
-<!-- Send to All Confirmation Modal -->
-<div class="modal fade" id="sendToAllModal" tabindex="-1" role="dialog">
+<!-- Send Confirmation Modal -->
+<div class="modal fade" id="sendConfirmModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Confirm Send to All</h5>
+                <h5 class="modal-title">Confirm Send Messages</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to send onboarding messages to <strong>{{ $pendingUsers->count() }}</strong> users?</p>
-                <p class="text-danger"><strong>Warning:</strong> This will generate new passwords for all users and send SMS messages.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('admin.Close')}}</button>
-                <button type="button" class="btn btn-primary" id="confirmSendToAll">
-                    <i class="fas fa-paper-plane"></i> Yes, Send Messages
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Send to Selected Confirmation Modal -->
-<div class="modal fade" id="sendToSelectedModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirm Send to Selected</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to send onboarding messages to the selected phone numbers?</p>
+                <p>Are you sure you want to send onboarding messages to <strong><span id="modalSelectedCount">0</span></strong> selected user(s)?</p>
                 <p class="text-danger"><strong>Warning:</strong> This will generate new passwords and send SMS messages.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('admin.Close')}}</button>
-                <button type="button" class="btn btn-primary" id="confirmSendToSelected">
+                <button type="button" class="btn btn-primary" id="confirmSendBtn">
                     <i class="fas fa-paper-plane"></i> Yes, Send Messages
                 </button>
             </div>
@@ -250,87 +252,93 @@ Please change your password after first login.
     
     $(document).ready(function() {
         // Initialize DataTable
-        $('#pendingUsersTable').DataTable();
-
-        // Add phone number field
-        $('#addPhoneBtn').on('click', function() {
-            const phoneRow = `
-                <div class="input-group mb-2 phone-number-row">
-                    <input type="text" name="phone_numbers[]" class="form-control phone-input" placeholder="+1234567890">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-danger remove-phone-btn">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            $('#phoneNumbersContainer').append(phoneRow);
+        var table = $('#pendingUsersTable').DataTable({
+            "pageLength": 25,
+            "order": [[1, "asc"]]
         });
 
-        // Remove phone number field
-        $(document).on('click', '.remove-phone-btn', function() {
-            $(this).closest('.phone-number-row').remove();
-        });
-
-        // Add user phone to selected list
-        $(document).on('click', '.add-to-selected-btn', function() {
-            const phone = $(this).data('phone');
-            if (phone) {
-                let exists = false;
-                $('.phone-input').each(function() {
-                    if ($(this).val() === phone) {
-                        exists = true;
-                    }
-                });
-
-                if (!exists) {
-                    const phoneRow = `
-                        <div class="input-group mb-2 phone-number-row">
-                            <input type="text" name="phone_numbers[]" class="form-control phone-input" value="${phone}" readonly>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-danger remove-phone-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    $('#phoneNumbersContainer').append(phoneRow);
-                    $('html, body').animate({
-                        scrollTop: $('#sendToSelectedForm').offset().top - 100
-                    }, 500);
-                } else {
-                    toastr.warning('Phone number already added');
-                }
+        // Update selection count
+        function updateSelectionCount() {
+            var count = $('.user-checkbox:checked').length;
+            $('#selectedCount').text(count);
+            $('#modalSelectedCount').text(count);
+            
+            if (count > 0) {
+                $('#selectionInfo').show();
+                $('#sendSelectedBtn').prop('disabled', false);
+            } else {
+                $('#selectionInfo').hide();
+                $('#sendSelectedBtn').prop('disabled', true);
             }
+        }
+
+        // Handle individual checkbox change
+        $(document).on('change', '.user-checkbox', function() {
+            updateSelectionCount();
+            
+            // Update select all checkbox
+            var totalCheckboxes = $('.user-checkbox').length;
+            var checkedCheckboxes = $('.user-checkbox:checked').length;
+            $('#selectAllCheckbox').prop('checked', totalCheckboxes === checkedCheckboxes);
         });
 
-        // Confirm send to all
-        $('#confirmSendToAll').on('click', function() {
-            const btn = $(this);
-            btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Sending...');
-            $('#sendToAllForm').submit();
+        // Handle select all checkbox
+        $('#selectAllCheckbox').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            $('.user-checkbox').prop('checked', isChecked);
+            updateSelectionCount();
         });
 
-        // Confirm send to selected
-        $('#confirmSendToSelected').on('click', function() {
-            const phoneInputs = $('.phone-input').filter(function() {
-                return $(this).val().trim() !== '';
-            });
+        // Select All button
+        $('#selectAllBtn').on('click', function() {
+            $('.user-checkbox').prop('checked', true);
+            $('#selectAllCheckbox').prop('checked', true);
+            updateSelectionCount();
+        });
 
-            if (phoneInputs.length === 0) {
-                toastr.error('Please add at least one phone number');
-                $('#sendToSelectedModal').modal('hide');
+        // Deselect All button
+        $('#deselectAllBtn').on('click', function() {
+            $('.user-checkbox').prop('checked', false);
+            $('#selectAllCheckbox').prop('checked', false);
+            updateSelectionCount();
+        });
+
+        // Apply Filters
+        $('#applyFiltersBtn').on('click', function() {
+            var params = {
+                state: $('#filterState').val(),
+                user_type: $('#filterUserType').val(),
+                category: $('#filterCategory').val(),
+                service: $('#filterService').val()
+            };
+            
+            var queryString = $.param(params);
+            window.location.href = '{{ route("admin.onboarding.index") }}?' + queryString;
+        });
+
+        // Reset Filters
+        $('#resetFiltersBtn').on('click', function() {
+            window.location.href = '{{ route("admin.onboarding.index") }}';
+        });
+
+        // Confirm send
+        $('#confirmSendBtn').on('click', function() {
+            var checkedCount = $('.user-checkbox:checked').length;
+            
+            if (checkedCount === 0) {
+                toastr.error('Please select at least one user');
+                $('#sendConfirmModal').modal('hide');
                 return;
             }
 
-            const btn = $(this);
+            var btn = $(this);
             btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Sending...');
-            $('#sendToSelectedForm').submit();
+            $('#sendMessageForm').submit();
         });
 
         // Test Twilio connection
         $('#testConnectionBtn').on('click', function() {
-            const btn = $(this);
+            var btn = $(this);
             btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Testing...');
 
             $.ajax({
@@ -351,6 +359,13 @@ Please change your password after first login.
                 }
             });
         });
+
+        // Set filter values from URL parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('state')) $('#filterState').val(urlParams.get('state'));
+        if (urlParams.has('user_type')) $('#filterUserType').val(urlParams.get('user_type'));
+        if (urlParams.has('category')) $('#filterCategory').val(urlParams.get('category'));
+        if (urlParams.has('service')) $('#filterService').val(urlParams.get('service'));
     });
 })(jQuery);
 </script>

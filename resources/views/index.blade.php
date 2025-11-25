@@ -188,6 +188,8 @@
                 @endforeach
             </div>
         </div>
+        <br>
+    <br>
     </section>
     <!--=========================
         FEATURED SERVICES END
@@ -324,6 +326,9 @@
     <!--=========================
         SELLAR JOIN START
     ==========================-->
+    <br>
+    <br>
+    <br>
     <section class="wsus__seller_join pt_90 xs_pt_60 pb_100 xs_pb_70" style="background: url({{ asset($join_as_a_provider->image) }});">
         <div class="container">
             <div class="row">

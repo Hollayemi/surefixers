@@ -62,7 +62,7 @@ class BlogController extends Controller
             $image_name ='uploads/custom-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $blog->image = $image_name;
+            $blog->image = 'main_files/public/'.$image_name;
         }
 
         $blog->admin_id = $admin->id;
@@ -117,7 +117,7 @@ class BlogController extends Controller
             $image_name ='uploads/custom-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $blog->image = $image_name;
+            $blog->image = 'main_files/public/'.$image_name;
             $blog->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);

@@ -184,7 +184,10 @@
                 @endforeach
             </div>
         </div>
+        <br>
+    <br>
     </section>
+    
     <!--=========================
         FEATURED SERVICES END
     ==========================-->
@@ -441,6 +444,9 @@
     <!--=========================
         SELLER JOIN2 START
     ==========================-->
+    <br>
+    <br>
+    <br>
     <section class="wsus__seller_join_2">
         <div class="container">
             <div class="wsus__seller_join2_bg pt_80 xs_pt_50 pb_80 xs_pb_50"

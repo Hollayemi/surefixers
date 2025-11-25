@@ -58,7 +58,7 @@ class TestimonialController extends Controller
 
         $testimonial->name = $request->name;
         $testimonial->designation = $request->designation;
-        $testimonial->image = $image_name;
+        $testimonial->image = 'main_files/public/'.$image_name;
         $testimonial->comment = $request->comment;
         $testimonial->status = $request->status;
         $testimonial->save();
@@ -99,7 +99,7 @@ class TestimonialController extends Controller
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->image)
                     ->save(public_path().'/'.$image_name);
-                $testimonial->image= $image_name;
+                $testimonial->image = 'main_files/public/'.$image_name;
                 $testimonial->save();
                 if($existing_image){
                     if(File::exists(public_path().'/'.$existing_image))unlink(public_path().'/'.$existing_image);

@@ -73,7 +73,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
-            $item->image = $banner_name;
+            $item->image = 'main_files/public/'. $banner_name;
         }
         $item->save();
 
@@ -107,7 +107,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
-            $item->image = $banner_name;
+            $item->image = 'main_files/public/'. $banner_name;
             $item->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -183,7 +183,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->background_image)
                 ->save(public_path().'/'.$banner_name);
-            $about->background_image = $banner_name;
+            $about->background_image = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -197,7 +197,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->foreground_image)
                 ->save(public_path().'/'.$banner_name);
-            $about->foreground_image = $banner_name;
+            $about->foreground_image = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -211,7 +211,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->client_image_one)
                 ->save(public_path().'/'.$banner_name);
-            $about->small_image_one = $banner_name;
+            $about->small_image_one = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -225,7 +225,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->client_image_two)
                 ->save(public_path().'/'.$banner_name);
-            $about->small_image_two = $banner_name;
+            $about->small_image_two = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -239,7 +239,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->client_image_three)
                 ->save(public_path().'/'.$banner_name);
-            $about->small_image_three = $banner_name;
+            $about->small_image_three = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -282,7 +282,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->background_image)
                 ->save(public_path().'/'.$banner_name);
-            $about->why_choose_background = $banner_name;
+            $about->why_choose_background = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
@@ -296,7 +296,7 @@ class AboutUsController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->foreground_image)
                 ->save(public_path().'/'.$banner_name);
-            $about->why_choose_foreground = $banner_name;
+            $about->why_choose_foreground = 'main_files/public/'. $banner_name;
             $about->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);

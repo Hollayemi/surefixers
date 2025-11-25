@@ -46,7 +46,7 @@ class ContactPageController extends Controller
             $banner_name = 'uploads/website-images/'.$banner_name;
             Image::make($request->supporter_image)
                 ->save(public_path().'/'.$banner_name);
-            $contact->supporter_image = $banner_name;
+            $contact->supporter_image = 'main_files/public/'.$banner_name;
             $contact->save();
             if($exist_banner){
                 if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);

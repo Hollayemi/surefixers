@@ -44,7 +44,7 @@ class ContentController extends Controller
             $image_name='uploads/website-images/'.$image_name;
             Image::make($image)
                 ->save(public_path().'/'.$image_name);
-            $maintainance->image=$image_name;
+            $maintainance->image = 'main_files/public/'.$image_name;
             $maintainance->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -128,7 +128,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->join_as_a_provider_banner = $image_name;
+            $setting->join_as_a_provider_banner = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -142,7 +142,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image2)
                 ->save(public_path().'/'.$image_name);
-            $setting->home2_join_as_provider = $image_name;
+            $setting->home2_join_as_provider ='main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -156,7 +156,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image3)
                 ->save(public_path().'/'.$image_name);
-            $setting->home3_join_as_provider = $image_name;
+            $setting->home3_join_as_provider ='main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -223,7 +223,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->app_image = $image_name;
+            $setting->app_image = 'main_files/public/'.$image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -237,7 +237,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image2)
                 ->save(public_path().'/'.$image_name);
-            $setting->home2_app_image = $image_name;
+            $setting->home2_app_image = 'main_files/public/'.$image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -251,7 +251,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image3)
                 ->save(public_path().'/'.$image_name);
-            $setting->home3_app_image = $image_name;
+            $setting->home3_app_image = 'main_files/public/'.$image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -306,7 +306,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->subscriber_image = $image_name;
+            $setting->subscriber_image = 'main_files/public/'.$image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -322,7 +322,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->background_image)
                 ->save(public_path().'/'.$image_name);
-            $setting->subscription_bg = $image_name;
+            $setting->subscription_bg = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -336,7 +336,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->background_image2)
                 ->save(public_path().'/'.$image_name);
-            $setting->home2_subscription_bg = $image_name;
+            $setting->home2_subscription_bg = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -350,7 +350,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->background_image3)
                 ->save(public_path().'/'.$image_name);
-            $setting->home3_subscription_bg = $image_name;
+            $setting->home3_subscription_bg = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -366,7 +366,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->blog_page_subscription_image)
                 ->save(public_path().'/'.$image_name);
-            $setting->blog_page_subscription_image = $image_name;
+            $setting->blog_page_subscription_image = 'main_files/public/'.$image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -433,7 +433,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->home2_contact_foreground = $image_name;
+            $setting->home2_contact_foreground = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -447,7 +447,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->background_image)
                 ->save(public_path().'/'.$image_name);
-            $setting->home2_contact_background = $image_name;
+            $setting->home2_contact_background = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -498,7 +498,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$image_name);
-            $setting->how_it_work_foreground = $image_name;
+            $setting->how_it_work_foreground = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -512,7 +512,7 @@ class ContentController extends Controller
             $image_name ='uploads/website-images/'.$image_name;
             Image::make($request->background_image)
                 ->save(public_path().'/'.$image_name);
-            $setting->how_it_work_background = $image_name;
+            $setting->how_it_work_background = 'main_files/public/'. $image_name;
             $setting->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -672,7 +672,7 @@ class ContentController extends Controller
             $default_avatar = 'uploads/website-images/'.$default_avatar;
             Image::make($request->image)
                 ->save(public_path().'/'.$default_avatar);
-            $setting->login_image = $default_avatar;
+            $setting->login_image = 'main_files/public/'. $default_avatar;
             $setting->save();
             if($existing_avatar){
                 if(File::exists(public_path().'/'.$existing_avatar))unlink(public_path().'/'.$existing_avatar);

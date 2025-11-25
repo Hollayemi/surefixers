@@ -116,7 +116,7 @@ class ServiceController extends Controller
             $image_name='uploads/custom-images/'.$image_name;
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
-            $service->image=$image_name;
+            $service->image = 'main_files/public/'.$image_name;
         }
 
         $package_features = array();
@@ -176,7 +176,7 @@ class ServiceController extends Controller
                         $image_name='uploads/custom-images/'.$image_name;
                         Image::make($service_image)
                             ->save(public_path().'/'.$image_name);
-                        $additional_service->image = $image_name;
+                        $additional_service->image = 'main_files/public/'.$image_name;
                         $additional_service->service_name = $request->additional_services[$index];
                         $additional_service->qty = $request->additional_quantities[$index];
                         $additional_service->price = $request->additional_prices[$index];
@@ -252,7 +252,7 @@ class ServiceController extends Controller
             $image_name='uploads/custom-images/'.$image_name;
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
-            $service->image=$image_name;
+            $service->image = 'main_files/public/'.$image_name;
             $service->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
@@ -326,7 +326,7 @@ class ServiceController extends Controller
                         $image_name='uploads/custom-images/'.$image_name;
                         Image::make($service_image)
                             ->save(public_path().'/'.$image_name);
-                        $additional_service->image = $image_name;
+                        $additional_service->image = 'main_files/public/'.$image_name;
                         $additional_service->save();
                         if($exist_image){
                             if(File::exists(public_path().'/'.$exist_image))unlink(public_path().'/'.$exist_image);
@@ -368,7 +368,7 @@ class ServiceController extends Controller
                         $image_name='uploads/custom-images/'.$image_name;
                         Image::make($service_image)
                             ->save(public_path().'/'.$image_name);
-                        $additional_service->image = $image_name;
+                        $additional_service->image = 'main_files/public/'.$image_name;
                         $additional_service->service_name = $request->additional_services[$index];
                         $additional_service->qty = $request->additional_quantities[$index];
                         $additional_service->price = $request->additional_prices[$index];

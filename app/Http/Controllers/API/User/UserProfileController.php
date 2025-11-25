@@ -280,7 +280,7 @@ class UserProfileController extends Controller
             Image::make($user_image)
                 ->save(public_path().'/'.$image_name);
 
-            $user->image=$image_name;
+            $user->image = 'main_files/public/'.$image_name;
             $user->save();
             if($old_image){
                 if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);

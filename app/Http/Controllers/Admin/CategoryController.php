@@ -128,7 +128,7 @@ class CategoryController extends Controller
             $logo_name = 'uploads/custom-images/'.$logo_name;
             Image::make($request->icon)
                 ->save(public_path().'/'.$logo_name);
-            $category->icon=$logo_name;
+            $category->icon='main_files/public/'.$logo_name;
             $category->save();
             if($old_logo){
                 if(File::exists(public_path().'/'.$old_logo))unlink(public_path().'/'.$old_logo);
