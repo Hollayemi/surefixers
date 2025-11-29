@@ -21,14 +21,12 @@ use App\Models\SocialLoginInformation;
 use Mail;
 use Str;
 use Session;
+
 class RegisterController extends Controller
 {
-
     use RegistersUsers;
 
-
     protected $redirectTo = '/dashboard';
-
 
     public function __construct()
     {
@@ -68,78 +66,64 @@ class RegisterController extends Controller
 
     public function storeRegister(Request $request){
         $rules = [
-            'name'=>'required',
-            'email'=>'required|unique:users',
-            'phone'=>'required|unique:users', // Add this
-            'password'=>'required|min:4',
-            'g-recaptcha-response'=>new Captcha()
+            'name' => 'required',
+            'phone' => 'required|unique:users',
+            // 'is_provider' => 'required|in:0,1',
+            'password' => 'required|min:4',
+            'g-recaptcha-response' => new Captcha()
         ];
+        
         $customMessages = [
             'name.required' => trans('user_validation.Name is required'),
-            'email.required' => trans('user_validation.Email is required'),
-            'email.unique' => trans('user_validation.Email already exist'),
             'phone.required' => trans('user_validation.Phone is required'),
             'phone.unique' => trans('user_validation.Phone already exist'),
+            'is_provider.required' => trans('user_validation.Please select if you are a service provider or not'),
+            'is_provider.in' => trans('user_validation.Invalid selection'),
             'password.required' => trans('user_validation.Password is required'),
             'password.min' => trans('user_validation.Password must be 4 characters'),
         ];
-        $this->validate($request, $rules,$customMessages);
-    
+        $this->validate($request, $rules, $customMessages);
+
         $user = new User();
         $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone; // Make sure this is saved
+        $user->phone = $request->phone;
+        $user->is_provider = $request->is_provider;
         $user->password = Hash::make($request->password);
         $user->verify_token = Str::random(100);
+        $user->status = 1;
+        $user->email_verified = 1;
         $user->save();
-    
-        MailHelper::setMailConfig();
-    
-        $template=EmailTemplate::where('id',4)->first();
-        $subject=$template->subject;
-        $message=$template->description;
-        $message = str_replace('{{user_name}}',$request->name,$message);
-        Mail::to($user->email)->send(new UserRegistration($message,$subject,$user));
-    
-        $notification = trans('user_validation.Register Successfully. Please Verify your email');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->back()->with($notification);
+
+        $notification = trans('user_validation.Register Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        
+        // Auto-login the user after registration
+        Auth::guard('web')->attempt(['phone' => $request->phone, 'password' => $request->password]);
+        
+        return redirect()->route('dashboard')->with($notification);
     }
 
-    public function userVerification($token){
-        $user = User::where('verify_token',$token)->first();
-        if($user){
-            $user->verify_token = null;
-            $user->status = 1;
-            $user->email_verified = 1;
-            $user->save();
-            $notification = trans('user_validation.Verification Successfully');
-            $notification = array('messege'=>$notification,'alert-type'=>'success');
-            return redirect()->route('login')->with($notification);
-        }else{
-            $notification = trans('user_validation.Invalid token');
-            $notification = array('messege'=>$notification,'alert-type'=>'error');
-            return redirect()->route('login')->with($notification);
-        }
-    }
-
+    // Remove userVerification method since we're not using email verification
 
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:255', 'unique:users'],
+            'is_provider' => ['required', 'in:0,1'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-
 
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'is_provider' => $data['is_provider'],
             'password' => Hash::make($data['password']),
+            'status' => 1,
+            'email_verified' => 1,
         ]);
     }
 }

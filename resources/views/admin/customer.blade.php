@@ -26,7 +26,9 @@
                                 <tr>
                                     <th >{{__('admin.SN')}}</th>
                                     <th >{{__('admin.Name')}}</th>
-                                    <th >{{__('admin.Email')}}</th>
+                                    <!-- <th >{{__('admin.Email')}}</th> -->
+                                    <th >{{__('admin.Phone')}}</th>
+                                    <th >{{__('admin.Joined')}}</th>
                                     <th >{{__('admin.Status')}}</th>
                                     <th >{{__('admin.Action')}}</th>
                                   </tr>
@@ -36,7 +38,9 @@
                                     <tr>
                                         <td>{{ ++$index }}</td>
                                         <td>{{ html_decode($customer->name) }}</td>
-                                        <td>{{ $customer->email }}</td>
+                                        <!-- <td>{{ $customer->email }}</td> -->
+                                        <td>{{ $customer->phone }}</td>
+                                        <td>{{ $customer->created_at }}</td>
 
                                         <td>
                                             @if($customer->status == 1)

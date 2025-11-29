@@ -642,7 +642,7 @@ class ContentController extends Controller
             $default_avatar = 'uploads/website-images/'.$default_avatar;
             Image::make($request->avatar)
                 ->save(public_path().'/'.$default_avatar);
-            $setting->default_avatar = $default_avatar;
+            $setting->default_avatar = 'main_files/public/'.$default_avatar;
             $setting->save();
             if($existing_avatar){
                 if(File::exists(public_path().'/'.$existing_avatar))unlink(public_path().'/'.$existing_avatar);

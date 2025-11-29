@@ -49,7 +49,7 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <fieldset>
-                                                    <legend>{{__('user.EmailOrPhone')}}*</legend>
+                                                    <legend>{{__('Phone Number')}}*</legend>
                                                     <input type="text" name="login">
                                                 </fieldset>
                                             </div>
@@ -116,6 +116,7 @@
             </div>
         </div>
     </section>
+    
     <!--=========================
         SIGN IN END
     ==========================-->

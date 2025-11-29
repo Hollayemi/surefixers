@@ -8,6 +8,7 @@
   'Email or Phone does not exist' => 'Email or Phone does not exist',
   'Phone already exist' => 'Phone already exist',
   'Phone is required' => 'Phone is required',
+  'Please select if you are a service provider or not' => 'Please select if you are a service provider or not',
   'Address is required' => 'Address is required',
   'Agree with terms and conditions is required' => 'Agree with terms and conditions is required',
   'This schedule already booked. please choose another schedule' => 'This schedule already booked. please choose another schedule',

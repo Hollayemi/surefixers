@@ -325,8 +325,6 @@ class ProviderOrderController extends Controller
 
         $notification= trans('user_validation.Request Send Successfully');
         return response()->json(['message' => $notification]);
-
     }
-
 
 }

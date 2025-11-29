@@ -53,10 +53,11 @@
                                                     <input type="text" name="name">
                                                 </fieldset>
                                             </div>
+                                            
                                             <div class="col-xl-12">
                                                 <fieldset>
-                                                    <legend>{{__('user.Email')}}*</legend>
-                                                    <input type="email" name="email">
+                                                    <legend>{{__('Phone Number')}}*</legend>
+                                                    <input type="text" name="phone">
                                                 </fieldset>
                                             </div>
 
@@ -66,6 +67,36 @@
                                                     <input type="password" name="password">
                                                 </fieldset>
                                             </div>
+                                            <br>
+                                                                                    
+                                            <div class="col-xl-12 mt-4">
+    <div>
+        <div>{{__('Are you an artisan?')}}*</div>
+        <div class="wsus__radio_group">
+            <div class="wsus__radio_item">
+                <input type="radio" id="artisan_yes" name="is_provider" value="1" required {{ old('is_provider') == '1' ? 'checked' : '' }}>
+                <label for="artisan_yes" class="wsus__radio_label">
+                    <span class="wsus__radio_custom"></span>
+                    {{__('Yes')}}
+                </label>
+            </div>
+            <div class="wsus__radio_item">
+                <input type="radio" id="artisan_no" name="is_provider" value="0" required {{ old('is_provider') == '0' ? 'checked' : '' }}>
+                <label for="artisan_no" class="wsus__radio_label">
+                    <span class="wsus__radio_custom"></span>
+                    {{__('No')}}
+                </label>
+            </div>
+        </div>
+        
+        <!-- Simple error display - controller handles the rest -->
+        @error('is_provider')
+            <div class="text-danger mt-2">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+</div>
 
                                             @if($recaptchaSetting->status==1)
                                                 <div class="col-xl-12">
@@ -117,3 +148,84 @@
         SIGN IN END
     ==========================-->
 @endsection
+
+<style>
+.wsus__radio_group {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.wsus__radio_item {
+    display: flex;
+    align-items: center;
+}
+
+.wsus__radio_item input[type="radio"] {
+    opacity: 0;
+}
+
+.wsus__radio_label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.wsus__radio_custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.wsus__radio_custom::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #007bff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.3s ease;
+}
+
+.wsus__radio_item input[type="radio"]:checked + .wsus__radio_label .wsus__radio_custom {
+    border-color: #007bff;
+}
+
+.wsus__radio_item input[type="radio"]:checked + .wsus__radio_label .wsus__radio_custom::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.wsus__radio_item input[type="radio"]:checked + .wsus__radio_label {
+    color: #007bff;
+}
+
+.wsus__radio_label:hover .wsus__radio_custom {
+    border-color: #007bff;
+}
+
+/* Error states - simplified */
+.radio-error .wsus__radio_label {
+    color: #dc3545;
+}
+
+.radio-error .wsus__radio_custom {
+    border-color: #dc3545;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+</style>
